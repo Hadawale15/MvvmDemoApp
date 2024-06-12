@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firstapp.R;
 import com.example.firstapp.model.CountryModel;
+import com.example.firstapp.util.CountryImageUtil;
 
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {
 
     private List<CountryModel> countriesList;
-
 
     public CountryAdapter(List<CountryModel> list) {
         this.countriesList = list;
@@ -32,7 +34,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         notifyDataSetChanged();
     }
 
-
     @NonNull
     @Override
     public CountryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,7 +42,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
         return new CountryViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
 
@@ -69,6 +69,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         {
             countryName.setText(country.getCountryName());
             capital.setText(country.getCapital());
+            CountryImageUtil.loadImage(countryFlag,country.getFlag(), CountryImageUtil.getProgressDrawable(countryFlag.getContext()));
         }
     }
 }

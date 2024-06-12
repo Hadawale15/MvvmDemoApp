@@ -1,18 +1,22 @@
 package com.example.firstapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class CountryModel {
 
-    String countryName;
-    String capital;
-    String flag;
 
+    @SerializedName(("name"))
+    String countryName;
+    @SerializedName(("capital"))
+    String capital;
+    @SerializedName(("flagPNG"))
+    String flag;
 
     public CountryModel(String countryName, String capital, String flag) {
         this.countryName = countryName;
         this.capital = capital;
         this.flag = flag;
     }
-
     public String getCountryName() {
         return countryName;
     }

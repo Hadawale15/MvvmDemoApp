@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     ListViewModel listViewModel;
     CountryAdapter countryAdapter= new CountryAdapter(new ArrayList<>());
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +39,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerView_id);
         listError=findViewById(R.id.error_text_id);
         progressBar=findViewById(R.id.Progressbar_id);
+        swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout_id);
 
         listViewModel= new ViewModelProvider(this).get(ListViewModel.class);
         listViewModel.refresh();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(countryAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listViewModel.refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         observerViewModel();
     }
